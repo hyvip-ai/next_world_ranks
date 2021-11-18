@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import classes from "./CountryTable.module.css";
+import { useRouter } from "next/router";
+
 import {
   KeyboardArrowDownRounded,
   KeyboardArrowUpRounded,
@@ -81,12 +83,14 @@ const orderBy = (countries, value, direction) => {
 };
 function CountryTable({ countries }) {
   // console.log(countries)
+  const router = useRouter()
   const [value, setValue] = useState(null);
   const [direction, setDirection] = useState(null);
   const orderedCountries = orderBy(countries, value, direction);
 
   const gotoCountryDetailsPageHandler = (countryName) => {
     console.log(countryName);
+    router.push(`/${countryName}`)
   };
   const setNewDirection = () => {
     if (!direction) {
