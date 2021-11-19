@@ -10,13 +10,11 @@ async function getBorderData(id){
 function Country(props) {
     const [borders, setborders] = useState([])
     const country = props.countryData[0]
-    // console.log(country)
     useEffect(() => {
        if(country.borders){
         Promise.all(country.borders.map(id=>{
             return getBorderData(id);
         })).then(data=>{
-            // console.log(data)
             setborders(data)
         })
        }
@@ -86,7 +84,6 @@ function Country(props) {
 export async function getServerSideProps(context){
     
   const countryName = context.params.country
-//   console.log(`https://restcountries.com/v3.1/name/${countryName}`)
   const data = await fetch(`https://restcountries.com/v3.1/name/${countryName}`)
   const countryData = await data.json()
     return{
