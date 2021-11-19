@@ -88,6 +88,7 @@ function CountryTable({ countries }) {
   const [direction, setDirection] = useState(null);
   const orderedCountries = orderBy(countries, value, direction);
 
+
   const gotoCountryDetailsPageHandler = (countryName) => {
     console.log(countryName);
     router.push(`/${countryName}`)
@@ -139,7 +140,7 @@ function CountryTable({ countries }) {
           </div>
         </button>
       </div>
-      {orderedCountries.map((item, index) => {
+      {  orderedCountries.map((item, index) => {
         return (
           <div
             className={classes.row}
