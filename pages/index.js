@@ -13,7 +13,6 @@ export default function Home({ worldData }) {
   const filteredCountries =  worldData.filter(item =>{
       return item.name.common.toLowerCase().includes(country)
     })
-    console.log(filteredCountries)
 
   return (
     <Layout>

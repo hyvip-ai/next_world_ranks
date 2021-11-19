@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import Layout from '../../components/layout/Layout'
 import classes from './country.module.css'
-
+import {useRouter} from 'next/router'
 async function getBorderData(id){
     const data = await fetch(`https://restcountries.com/v3.1/alpha/${id}`)
     const result = await data.json();
@@ -10,6 +10,11 @@ async function getBorderData(id){
 function Country(props) {
     const [borders, setborders] = useState([])
     const country = props.countryData[0]
+    const router = useRouter()
+    const gotoCountryPage = (name)=>{
+        console.log(name)
+        router.push(`/${name}`)
+    }
     useEffect(() => {
        if(country.borders){
         Promise.all(country.borders.map(id=>{
@@ -67,7 +72,7 @@ function Country(props) {
                     <div className={classes.details_panel_borders_label}>Neighbouring Countries</div>
                     <div className={classes.details_panel_borders_container}>
                     {borders.map(item=>{
-                            return <div className={classes.details_panel_borders_country} key={item.name.common}>
+                            return <div className={classes.details_panel_borders_country} key={item.name.common} onClick={()=>gotoCountryPage(item.name.common)}>
                                 <img src={item.flags.svg} alt={`${item.name.common} Flag`} />
                                 <div className={classes.details_panel_borders_name}>{item.name.common}</div>
                             </div>
