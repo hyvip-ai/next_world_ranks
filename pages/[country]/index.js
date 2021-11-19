@@ -10,7 +10,12 @@ async function getBorderData(id){
 function Country(props) {
     const [borders, setborders] = useState([])
     const country = props.countryData[0]
+    
     const router = useRouter()
+    if(router.query.country==='China'){
+        country = props.countryData[2]
+
+    }
     const gotoCountryPage = (name)=>{
         console.log(name)
         router.push(`/${name}`)
@@ -47,7 +52,7 @@ function Country(props) {
                     <h4 className={classes.details_panel_heading}>Details</h4>
                     <div className={classes.details_panel_row}>
                         <div className={classes.details_panel_label}>Capital</div>
-                        <div className={classes.details_panel_value}>{country.capital[0]}</div>
+                        <div className={classes.details_panel_value}>{country.capital?country.capital[0]:'No Data Found'}</div>
                     </div>
 
                     <div className={classes.details_panel_row}>
@@ -91,11 +96,17 @@ export async function getServerSideProps(context){
   const countryName = context.params.country
   const data = await fetch(`https://restcountries.com/v3.1/name/${countryName}`)
   const countryData = await data.json()
+  if(countryData.status === 404){
+    return{
+        notFound:true
+    }
+  }
     return{
         props:{
             countryData
         }
     }
+
 }
 
 export default Country
